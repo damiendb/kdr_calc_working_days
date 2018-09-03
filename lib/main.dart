@@ -18,6 +18,10 @@ class _MyAppState extends State<MyApp> {
   ContractTerm newContract = new ContractTerm();
   DateFormat formatter = new DateFormat('EEEE, d MMMM yyyy');
 
+  final Color _kdrDarkBlue = Color.fromRGBO(18, 57, 100, 1.0);
+  final Color _kdrLightBlue = Color.fromRGBO(13, 170, 221, 1.0);
+  final Color _kdrGrey = Color.fromRGBO(128, 128, 128, 1.0);
+
   String para1 = "2018-08-28";
   String para2 = "2018-09-25";
   String para3 = "8.0";
@@ -52,16 +56,18 @@ class _MyAppState extends State<MyApp> {
     return new MaterialApp(
       title: _title,
       home: new Scaffold(
+        backgroundColor: _kdrGrey,
         appBar: new AppBar(
           title: new Text(_title),
+          backgroundColor: _kdrDarkBlue,
           actions: <Widget>[
             new IconButton(
-                icon: new Icon(Icons.add_alert),
+                icon: new Icon(Icons.refresh),
                 onPressed: () {
                   _pressed("Alert Pressed", "2018-01-28");
                 }),
             new IconButton(
-                icon: new Icon(Icons.print),
+                icon: new Icon(Icons.save),
                 onPressed: () {
                   _pressed("Print Pressed", "2018-02-27");
                 }),
@@ -70,42 +76,47 @@ class _MyAppState extends State<MyApp> {
                 onPressed: () {
                   _pressed("People Pressed", "2018-03-28");
                 }),
-            new RaisedButton(
-                child: new Text("Button"),
-                onPressed: () {
-                  _pressed("Super Button of Doom", "2018-04-28");
-                }),
           ],
         ),
         body: new Container(
-            padding: const EdgeInsets.all(32.0),
-            child: new Center(
-                child: new Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                  new Text(_myState),
-                  new Text(" "),
-                  new Text("First Day of Contract: " +
-                      //    newContract.startDate.toString()),
-                      formatter.format(newContract.startDate)),
-                  new Text("Last Day of Contract: " +
-                      //    newContract.endDate.toString()),
-                      formatter.format(newContract.endDate)),
-                  new Text(
-                      "Hours per Day: " + newContract.hoursPerDay.toString()),
-                  new Text(" "),
-                  new Text("Number of Public Holidays during Contract: " +
-                      newContract.totalHolidays.toString()),
-                  new Text("Number of Days during Contract: " +
-                      newContract.totalDays.toString()),
-                  new Text("Number of Week Days during Contract: " +
-                      newContract.totalWeekDays.toString()),
-                  new Text("Number of Working Days during Contract: " +
-                      newContract.totalWorkingDays.toString()),
-                  new Text("Number of Working Hours during Contract: " +
-                      newContract.totalWorkingHours.toString()),
-                  new Text(" ")
-                ]))),
+            padding: const EdgeInsets.all(8.0),
+            child: new ListView(
+              children: <Widget>[
+                new Card(
+                    child: new Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                      new Text(_myState),
+                      new Text(" "),
+                      new Text("First Day of Contract: " +
+                          //    newContract.startDate.toString()),
+                          formatter.format(newContract.startDate)),
+                      new Text("Last Day of Contract: " +
+                          //    newContract.endDate.toString()),
+                          formatter.format(newContract.endDate)),
+                      new Text("Hours per Day: " +
+                          newContract.hoursPerDay.toString()),
+                      new Text(" ")
+                    ])),
+                new Card(
+                    child: new Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                      new Text(" "),
+                      new Text("Number of Public Holidays during Contract: " +
+                          newContract.totalHolidays.toString()),
+                      new Text("Number of Days during Contract: " +
+                          newContract.totalDays.toString()),
+                      new Text("Number of Week Days during Contract: " +
+                          newContract.totalWeekDays.toString()),
+                      new Text("Number of Working Days during Contract: " +
+                          newContract.totalWorkingDays.toString()),
+                      new Text("Number of Working Hours during Contract: " +
+                          newContract.totalWorkingHours.toString()),
+                      new Text(" ")
+                    ])),
+              ],
+            )),
         floatingActionButton: new FloatingActionButton(
           onPressed: () {
             _pressed("Super Button of Doom", "2018-04-28");
