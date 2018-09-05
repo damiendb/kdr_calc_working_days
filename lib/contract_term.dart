@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import 'holidays_wa.dart';
@@ -28,26 +29,46 @@ class ContractTerm {
     this.totalWorkingHours = this.totalWorkingDays * this.hoursPerDay;
   }
 
-  void displayContract() {
-    print("First Day of Contract: " + formatter.format(this.startDate));
-    print("Last Day of Contract: " + formatter.format(this.endDate));
-    print("Hours per Day: " + this.hoursPerDay.toString());
-    print("");
+  List<Widget> displayContract() {
+    List<Widget> detailsOfContract = new List<Widget>();
 
+    detailsOfContract.add(new Text(""));
     this._inPeriodHolidays.forEach((value) {
-      print(formatter.format(value.pubHoliday) + " is " + value.holDescription);
+      // this displays the public holidays in the period
+      detailsOfContract.add(new Text(
+          formatter.format(value.pubHoliday) + " is " + value.holDescription));
     });
-    print("");
+    detailsOfContract.add(new Text(""));
+    detailsOfContract.add(new Text(
+        "Number of Public Holidays during Contract: " +
+            this.totalHolidays.toString()));
+    detailsOfContract.add(new Text(
+        "Number of Days during Contract: " + this.totalDays.toString()));
+    detailsOfContract.add(new Text("Number of Week Days during Contract: " +
+        this.totalWeekDays.toString()));
+    detailsOfContract.add(new Text("Number of Working Days during Contract: " +
+        this.totalWorkingDays.toString()));
+    detailsOfContract.add(new Text("Number of Working Hours during Contract: " +
+        this.totalWorkingHours.toString()));
+    detailsOfContract.add(new Text(""));
 
-    print("Number of Public Holidays during Contract: " +
-        this.totalHolidays.toString());
-    print("Number of Days during Contract: " + this.totalDays.toString());
-    print("Number of Week Days during Contract: " +
-        this.totalWeekDays.toString());
-    print("Number of Working Days during Contract: " +
-        this.totalWorkingDays.toString());
-    print("Number of Working Hours during Contract: " +
-        this.totalWorkingHours.toString());
+    return detailsOfContract;
+  }
+
+  List<Widget> tempContractInputs() {
+    List<Widget> tempDisplay = [
+      new Text(" "),
+      new Text("First Day of Contract: " +
+          //    newContract.startDate.toString()),
+          formatter.format(this.startDate)),
+      new Text("Last Day of Contract: " +
+          //    newContract.endDate.toString()),
+          formatter.format(this.endDate)),
+      new Text("Hours per Day: " + this.hoursPerDay.toString()),
+      new Text(" "),
+    ];
+
+    return tempDisplay;
   }
 
   static List<Holidays> holidaysInPeriod(
@@ -85,3 +106,28 @@ class ContractTerm {
     return totalDays;
   }
 }
+
+/*
+void printContract() {
+    print("First Day of Contract: " + formatter.format(this.startDate));
+    print("Last Day of Contract: " + formatter.format(this.endDate));
+    print("Hours per Day: " + this.hoursPerDay.toString());
+    print("");
+
+    this._inPeriodHolidays.forEach((value) {
+      // this displays the public holidays in the period
+      print(formatter.format(value.pubHoliday) + " is " + value.holDescription);
+    });
+    print("");
+
+    print("Number of Public Holidays during Contract: " +
+        this.totalHolidays.toString());
+    print("Number of Days during Contract: " + this.totalDays.toString());
+    print("Number of Week Days during Contract: " +
+        this.totalWeekDays.toString());
+    print("Number of Working Days during Contract: " +
+        this.totalWorkingDays.toString());
+    print("Number of Working Hours during Contract: " +
+        this.totalWorkingHours.toString());
+  }
+ */

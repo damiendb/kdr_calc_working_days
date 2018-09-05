@@ -4,17 +4,21 @@ import 'package:intl/intl.dart';
 import 'contract_term.dart';
 
 void main() {
-  runApp(new MyApp());
+  runApp(new ContractTermCalc());
 }
 
 // will not change
-class MyApp extends StatefulWidget {
+class ContractTermCalc extends StatefulWidget {
   @override
-  _MyAppState createState() => new _MyAppState();
+  _ContractTermCalc createState() => new _ContractTermCalc();
 }
 
 // will change
-class _MyAppState extends State<MyApp> {
+class _ContractTermCalc extends State<ContractTermCalc> {
+  // This block of variables could be defined first and then set in _MyAppState Constructor
+  // May be a more elegant way of doing things
+  // Also newContract and formatter should be private variables
+
   ContractTerm newContract = new ContractTerm();
   DateFormat formatter = new DateFormat('EEEE, d MMMM yyyy');
 
@@ -27,9 +31,8 @@ class _MyAppState extends State<MyApp> {
   String para3 = "8.0";
 
   String _title = "Working Days Calculator";
-  String _myState = "No State";
 
-  void _pressed(String message, String startDate) {
+  void _pressed(String startDate) {
     setState(() {
       // Add user input values to newContract
       newContract.startDate = DateTime.parse(startDate);
@@ -41,22 +44,15 @@ class _MyAppState extends State<MyApp> {
 
       // Display newContract
       newContract.displayContract();
-
-      _myState = message;
     });
-    print(_myState);
   }
 
   @override
   Widget build(BuildContext context) {
-    // it's okay to insert code here
-    // this is run every tme setState() is called!!
-    print("*****  BUILDING ******");
-
     return new MaterialApp(
       title: _title,
       home: new Scaffold(
-        backgroundColor: _kdrGrey,
+        backgroundColor: _kdrDarkBlue,
         appBar: new AppBar(
           title: new Text(_title),
           backgroundColor: _kdrDarkBlue,
@@ -64,17 +60,17 @@ class _MyAppState extends State<MyApp> {
             new IconButton(
                 icon: new Icon(Icons.refresh),
                 onPressed: () {
-                  _pressed("Alert Pressed", "2018-01-28");
+                  _pressed("2018-01-28");
                 }),
             new IconButton(
                 icon: new Icon(Icons.save),
                 onPressed: () {
-                  _pressed("Print Pressed", "2018-02-27");
+                  _pressed("2018-02-27");
                 }),
             new IconButton(
                 icon: new Icon(Icons.people),
                 onPressed: () {
-                  _pressed("People Pressed", "2018-03-28");
+                  _pressed("2018-03-28");
                 }),
           ],
         ),
@@ -85,41 +81,16 @@ class _MyAppState extends State<MyApp> {
                 new Card(
                     child: new Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                      new Text(_myState),
-                      new Text(" "),
-                      new Text("First Day of Contract: " +
-                          //    newContract.startDate.toString()),
-                          formatter.format(newContract.startDate)),
-                      new Text("Last Day of Contract: " +
-                          //    newContract.endDate.toString()),
-                          formatter.format(newContract.endDate)),
-                      new Text("Hours per Day: " +
-                          newContract.hoursPerDay.toString()),
-                      new Text(" ")
-                    ])),
+                        children: newContract.tempContractInputs())),
                 new Card(
                     child: new Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                      new Text(" "),
-                      new Text("Number of Public Holidays during Contract: " +
-                          newContract.totalHolidays.toString()),
-                      new Text("Number of Days during Contract: " +
-                          newContract.totalDays.toString()),
-                      new Text("Number of Week Days during Contract: " +
-                          newContract.totalWeekDays.toString()),
-                      new Text("Number of Working Days during Contract: " +
-                          newContract.totalWorkingDays.toString()),
-                      new Text("Number of Working Hours during Contract: " +
-                          newContract.totalWorkingHours.toString()),
-                      new Text(" ")
-                    ])),
+                        children: newContract.displayContract())),
               ],
             )),
         floatingActionButton: new FloatingActionButton(
           onPressed: () {
-            _pressed("Super Button of Doom", "2018-04-28");
+            _pressed("2018-04-28");
           },
           tooltip: 'Increment',
           child: new Icon(Icons.save),
